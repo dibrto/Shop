@@ -1,6 +1,7 @@
 package org.shop.data;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public enum GoodsCategories {
     FOOD(new BigDecimal("30"), 10, new BigDecimal("20")),
@@ -17,7 +18,7 @@ public enum GoodsCategories {
     }
 
     public BigDecimal getMarkupRate() {
-        return markupRate;
+        return BigDecimal.ONE.add(markupRate.divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP));
     }
 
     public void setMarkupRate(BigDecimal markupRate) {
