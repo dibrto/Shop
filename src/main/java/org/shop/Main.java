@@ -31,7 +31,7 @@ public class Main {
 
             Good good = new Good(name, price, category, date, quantity);
             System.out.println(goodService.getSalePrice(good));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println(e.getMessage());
         }
     }

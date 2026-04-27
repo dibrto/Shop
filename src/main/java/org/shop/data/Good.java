@@ -62,10 +62,6 @@ public class Good {
     }
 
     public void setExpiryDate(LocalDate expiryDate) {
-        if (!expiryDate.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Expiry Date must be after today");
-        }
-
         this.expiryDate = expiryDate;
     }
 

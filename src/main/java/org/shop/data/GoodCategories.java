@@ -42,7 +42,7 @@ public enum GoodCategories {
     }
 
     public BigDecimal getExpiryDiscountRate() {
-        return expiryDiscountRate;
+        return BigDecimal.ONE.subtract(expiryDiscountRate.divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP));
     }
 
     public void setExpiryDiscountRate(BigDecimal expiryDiscountRate) {
