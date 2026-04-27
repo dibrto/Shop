@@ -1,7 +1,7 @@
 package org.shop;
 
-import org.shop.data.Goods;
-import org.shop.data.GoodsCategories;
+import org.shop.data.Good;
+import org.shop.data.GoodCategories;
 import org.shop.service.impl.GoodServiceImpl;
 
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ public class Main {
             BigDecimal price = new BigDecimal(sc.nextLine());
 
             System.out.println("Category (FOOD, NON_FOOD): ");
-            GoodsCategories category = GoodsCategories.valueOf(sc.nextLine().toUpperCase());
+            GoodCategories category = GoodCategories.valueOf(sc.nextLine().toUpperCase());
 
             System.out.println("Date (yyyy-MM-dd): ");
             LocalDate date = LocalDate.parse(sc.nextLine());
@@ -29,7 +29,7 @@ public class Main {
             System.out.println("Quantity: ");
             int quantity = Integer.parseInt(sc.nextLine());
 
-            Goods good = new Goods(name, price, category, date, quantity);
+            Good good = new Good(name, price, category, date, quantity);
             System.out.println(goodService.getSalePrice(good));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());

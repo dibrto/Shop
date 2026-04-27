@@ -1,9 +1,9 @@
 package org.shop.service;
 
-import org.shop.data.Goods;
+import org.shop.data.Good;
 
 import java.math.BigDecimal;
 
 public interface GoodService {
-    BigDecimal getSalePrice(Goods good);
+    BigDecimal getSalePrice(Good good);
 }

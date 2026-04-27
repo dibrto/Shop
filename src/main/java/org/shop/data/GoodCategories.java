@@ -3,7 +3,7 @@ package org.shop.data;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public enum GoodsCategories {
+public enum GoodCategories {
     FOOD(new BigDecimal("30"), 10, new BigDecimal("20")),
     NON_FOOD(new BigDecimal("25"), 5, new BigDecimal("5"));
 
@@ -11,7 +11,7 @@ public enum GoodsCategories {
     private int expirationThresholdDays;
     private BigDecimal expiryDiscountRate;
 
-    GoodsCategories(BigDecimal markupRate, int expirationThresholdDays, BigDecimal expiryDiscountRate) {
+    GoodCategories(BigDecimal markupRate, int expirationThresholdDays, BigDecimal expiryDiscountRate) {
         setMarkupRate(markupRate);
         setExpirationThresholdDays(expirationThresholdDays);
         setExpiryDiscountRate(expiryDiscountRate);

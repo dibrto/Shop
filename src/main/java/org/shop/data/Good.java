@@ -4,15 +4,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class Goods {
+public class Good {
     private final UUID id;
     private String name;
     private BigDecimal deliveryPrice;
-    private GoodsCategories category;
+    private GoodCategories category;
     private LocalDate expiryDate;
     private int quantity;
 
-    public Goods(String name, BigDecimal deliveryPrice, GoodsCategories category, LocalDate expiryDate, int quantity) {
+    public Good(String name, BigDecimal deliveryPrice, GoodCategories category, LocalDate expiryDate, int quantity) {
         this.id = UUID.randomUUID();
         setName(name);
         setDeliveryPrice(deliveryPrice);
@@ -49,11 +49,11 @@ public class Goods {
         this.deliveryPrice = deliveryPrice;
     }
 
-    public GoodsCategories getCategory() {
+    public GoodCategories getCategory() {
         return category;
     }
 
-    public void setCategory(GoodsCategories category) {
+    public void setCategory(GoodCategories category) {
         this.category = category;
     }
 
