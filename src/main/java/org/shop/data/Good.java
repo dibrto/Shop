@@ -2,10 +2,13 @@ package org.shop.data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Good {
-    private final UUID id;
+    private static int nextId = 1;
+
+    private final int id;
     private String name;
     private BigDecimal deliveryPrice;
     private GoodCategories category;
@@ -13,7 +16,7 @@ public class Good {
     private int quantity;
 
     public Good(String name, BigDecimal deliveryPrice, GoodCategories category, LocalDate expiryDate, int quantity) {
-        this.id = UUID.randomUUID();
+        this.id = nextId++;
         setName(name);
         setDeliveryPrice(deliveryPrice);
         setCategory(category);
@@ -21,7 +24,7 @@ public class Good {
         setQuantity(quantity);
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
@@ -75,6 +78,18 @@ public class Good {
         }
 
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Good good = (Good) o;
+        return Objects.equals(id, good.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     @Override
