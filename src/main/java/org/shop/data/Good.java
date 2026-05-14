@@ -3,7 +3,6 @@ package org.shop.data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Good {
     private static int nextId = 1;
