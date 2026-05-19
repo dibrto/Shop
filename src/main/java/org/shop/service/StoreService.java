@@ -1,11 +1,11 @@
 package org.shop.service;
 
-import org.shop.exception.GoodNotFoundException;
+import org.shop.data.Store;
 import org.shop.data.Good;
-import org.shop.exception.InsufficientQuantityException;
+
+import java.util.Map;
 
 public interface StoreService {
-    void deliveryGood(Good good);
-    void addToCart(int id, int quantity) throws GoodNotFoundException, InsufficientQuantityException;
-    void soldGoods();
+    void deliveryGood(Store store, Good good);
+    void soldGoods(Store store, Map<Good, Integer> cart);
 }
