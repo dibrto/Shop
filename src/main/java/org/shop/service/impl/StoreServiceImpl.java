@@ -1,12 +1,26 @@
 package org.shop.service.impl;
 
+import org.shop.data.CashDesk;
 import org.shop.data.Good;
 import org.shop.data.Store;
+import org.shop.service.CashDeskService;
 import org.shop.service.StoreService;
 
 import java.util.Map;
 
 public class StoreServiceImpl implements StoreService {
+    private final CashDeskService cashDeskService;
+
+    public StoreServiceImpl(CashDeskService cashDeskService) {
+        this.cashDeskService = cashDeskService;
+    }
+
+    @Override
+    public void makeSale(Store store, CashDesk cashDesk) {
+        this.soldGoods(store, cashDesk.getCurrCart());
+        cashDeskService.emptyCart(cashDesk);
+    }
+
     @Override
     public void deliveryGood(Store store, Good good) {
         store.getDeliveredGoods().add(good);

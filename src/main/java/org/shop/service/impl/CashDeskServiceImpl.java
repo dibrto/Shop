@@ -26,6 +26,11 @@ public class CashDeskServiceImpl implements CashDeskService {
         cashDesk.getCurrCart().put(good, goodQuantity + quantity);
     }
 
+    @Override
+    public void emptyCart(CashDesk cashDesk) {
+        cashDesk.getCurrCart().clear();
+    }
+
     private Good findGoodById(int id) throws GoodNotFoundException {
         for (Good good : store.getDeliveredGoods()) {
             if (good.getId() == id) {

@@ -9,7 +9,6 @@ public class CashDesk {
     private final Cashier cashier;
     private final Map<Good, Integer> currCart;
 
-
     public CashDesk(Cashier cashier) {
         this.id = UUID.randomUUID();
         this.cashier = cashier;

@@ -6,4 +6,5 @@ import org.shop.exception.InsufficientQuantityException;
 
 public interface CashDeskService {
     void scanGood(CashDesk cashDesk, int id, int quantity) throws GoodNotFoundException, InsufficientQuantityException;
+    void emptyCart(CashDesk cashDesk);
 }

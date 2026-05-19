@@ -12,11 +12,11 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         Store store = new Store();
-        StoreServiceImpl storeService = new StoreServiceImpl();
+        CashDeskServiceImpl cashDeskService = new CashDeskServiceImpl(store);
+        StoreServiceImpl storeService = new StoreServiceImpl(cashDeskService);
 
         Cashier cashier1 = new Cashier("Ivan", BigDecimal.valueOf(1000));
         CashDesk cashDesk1 = new CashDesk(cashier1);
-        CashDeskServiceImpl cashDeskService = new CashDeskServiceImpl(store);
 
         Good g1 = new Good("Milk", BigDecimal.valueOf(2.55), GoodCategories.FOOD, LocalDate.parse("2026-05-30"), 10);
         Good g2 = new Good("Bread", BigDecimal.valueOf(1.78), GoodCategories.FOOD, LocalDate.parse("2026-05-18"), 35);
@@ -26,15 +26,14 @@ public class Main {
         try {
             cashDeskService.scanGood(cashDesk1,1, 1);
             cashDeskService.scanGood(cashDesk1,2, 2);
-            cashDeskService.scanGood(cashDesk1,2, 2);
-            storeService.soldGoods(store, cashDesk1.getCurrCart());
-            cashDesk1.getCurrCart().clear();
+            storeService.makeSale(store, cashDesk1);
+
             System.out.println(store.getDeliveredGoods());
             System.out.println(store.getSoldGoods());
 
             cashDeskService.scanGood(cashDesk1, 2, 2);
-            storeService.soldGoods(store, cashDesk1.getCurrCart());
-            cashDesk1.getCurrCart().clear();
+            storeService.makeSale(store, cashDesk1);
+
             System.out.println(store.getSoldGoods());
         } catch (GoodNotFoundException | InsufficientQuantityException e) {
             System.out.println(e.getMessage());
