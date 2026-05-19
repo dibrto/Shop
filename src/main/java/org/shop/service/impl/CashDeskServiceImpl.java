@@ -7,7 +7,7 @@ import org.shop.service.CashDeskService;
 
 public class CashDeskServiceImpl implements CashDeskService {
     @Override
-    public void scanGood(CashDesk cashDesk, Good good, int quantity) throws InsufficientQuantityException {
+    public void addToCart(CashDesk cashDesk, Good good, int quantity) throws InsufficientQuantityException {
         if (good.getQuantity() < quantity) {
             throw new InsufficientQuantityException(good, quantity);
         }

@@ -28,17 +28,17 @@ public class Main {
         Good good;
         try {
             good = storeService.findGoodById(store, 1);
-            cashDeskService.scanGood(cashDesk1, good, 1);
+            cashDeskService.addToCart(cashDesk1, good, 1);
 
             good = storeService.findGoodById(store, 2);
-            cashDeskService.scanGood(cashDesk1, good, 2);
+            cashDeskService.addToCart(cashDesk1, good, 2);
 
             storeService.makeSale(store, cashDesk1);
 
             System.out.println(store.getSoldGoods());
 
             good = storeService.findGoodById(store, 2);
-            cashDeskService.scanGood(cashDesk1, good, 2);
+            cashDeskService.addToCart(cashDesk1, good, 2);
 
             storeService.makeSale(store, cashDesk1);
 
