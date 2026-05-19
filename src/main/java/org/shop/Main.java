@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         Store store = new Store();
-        CashDeskServiceImpl cashDeskService = new CashDeskServiceImpl(store);
+        CashDeskServiceImpl cashDeskService = new CashDeskServiceImpl();
         StoreServiceImpl storeService = new StoreServiceImpl(cashDeskService);
 
         Cashier cashier1 = new Cashier("Ivan", BigDecimal.valueOf(1000));
@@ -23,15 +23,23 @@ public class Main {
         storeService.deliveryGood(store, g1);
         storeService.deliveryGood(store, g2);
 
+        System.out.println(store.getDeliveredGoods());
+
+        Good good;
         try {
-            cashDeskService.scanGood(cashDesk1,1, 1);
-            cashDeskService.scanGood(cashDesk1,2, 2);
+            good = storeService.findGoodById(store, 1);
+            cashDeskService.scanGood(cashDesk1, good, 1);
+
+            good = storeService.findGoodById(store, 2);
+            cashDeskService.scanGood(cashDesk1, good, 2);
+
             storeService.makeSale(store, cashDesk1);
 
-            System.out.println(store.getDeliveredGoods());
             System.out.println(store.getSoldGoods());
 
-            cashDeskService.scanGood(cashDesk1, 2, 2);
+            good = storeService.findGoodById(store, 2);
+            cashDeskService.scanGood(cashDesk1, good, 2);
+
             storeService.makeSale(store, cashDesk1);
 
             System.out.println(store.getSoldGoods());

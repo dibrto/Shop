@@ -3,6 +3,7 @@ package org.shop.service.impl;
 import org.shop.data.CashDesk;
 import org.shop.data.Good;
 import org.shop.data.Store;
+import org.shop.exception.GoodNotFoundException;
 import org.shop.service.CashDeskService;
 import org.shop.service.StoreService;
 
@@ -38,5 +39,15 @@ public class StoreServiceImpl implements StoreService {
             int goodQuantity = store.getSoldGoods().getOrDefault(good, 0);
             store.getSoldGoods().put(good, goodQuantity + quantity);
         }
+    }
+
+    public Good findGoodById(Store store, int id) throws GoodNotFoundException {
+        for (Good good : store.getDeliveredGoods()) {
+            if (good.getId() == id) {
+                return good;
+            }
+        }
+
+        throw new GoodNotFoundException(id);
     }
 }
