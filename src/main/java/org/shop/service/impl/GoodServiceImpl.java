@@ -15,7 +15,7 @@ public class GoodServiceImpl implements GoodService {
     }
 
     private boolean isExpired(Good good){
-        return getDaysUntilExpiry(good) <= 0;
+        return getDaysUntilExpiry(good) < 0;
     }
 
     private boolean isInThresholdDays(Good good) {
