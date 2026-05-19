@@ -8,8 +8,8 @@ public class Cashier {
     private String name;
     private BigDecimal salary;
 
-    public Cashier(UUID id, String name, BigDecimal salary) {
-        this.id = id;
+    public Cashier(String name, BigDecimal salary) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.salary = salary;
     }
