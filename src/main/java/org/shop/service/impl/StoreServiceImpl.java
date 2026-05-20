@@ -2,7 +2,6 @@ package org.shop.service.impl;
 
 import org.shop.data.*;
 import org.shop.exception.GoodNotFoundException;
-import org.shop.service.CashDeskService;
 import org.shop.service.StoreService;
 
 import java.util.Map;
