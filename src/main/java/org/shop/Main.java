@@ -36,12 +36,16 @@ public class Main {
             good = storeService.findGoodById(store, 2);
             cashDeskService.addToCart(cashDesk1, good, 2);
 
-            cashDeskService.getCartPrice(cashDesk1);
+            BigDecimal totalSum = cashDeskService.getCartPrice(cashDesk1);
+            if (totalSum.compareTo(BigDecimal.valueOf(7.94)) > 0) {
+                System.out.println("Not enough money");
+            }
+
             storeService.soldGoods(store, cashDesk1.getCurrCart());
             cashDeskService.emptyCart(cashDesk1);
 
             System.out.println(store.getSoldGoods());
-        } catch (GoodNotFoundException | InsufficientQuantityException e) {
+        } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException e) {
             System.out.println(e.getMessage());
         }
 

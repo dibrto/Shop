@@ -21,6 +21,10 @@ public class CashDeskServiceImpl implements CashDeskService {
             throw new InsufficientQuantityException(good, quantity);
         }
 
+        if (goodService.isExpired(good)){
+            throw new IllegalStateException("Expired goods cannot be sold");
+        }
+
         int goodQuantity = cashDesk.getCurrCart().getOrDefault(good, 0);
         cashDesk.getCurrCart().put(good, goodQuantity + quantity);
     }

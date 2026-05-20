@@ -14,12 +14,14 @@ public class GoodServiceImpl implements GoodService {
         return (int) ChronoUnit.DAYS.between(LocalDate.now(),good.getExpiryDate());
     }
 
-    private boolean isExpired(Good good){
-        return getDaysUntilExpiry(good) < 0;
-    }
 
     private boolean isInThresholdDays(Good good) {
         return good.getCategory().getExpirationThresholdDays() >= getDaysUntilExpiry(good);
+    }
+
+    @Override
+    public boolean isExpired(Good good){
+        return getDaysUntilExpiry(good) < 0;
     }
 
     @Override
