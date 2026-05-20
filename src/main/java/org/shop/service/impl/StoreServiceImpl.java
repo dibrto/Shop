@@ -1,9 +1,6 @@
 package org.shop.service.impl;
 
-import org.shop.data.CashDesk;
-import org.shop.data.Good;
-import org.shop.data.Receipt;
-import org.shop.data.Store;
+import org.shop.data.*;
 import org.shop.exception.GoodNotFoundException;
 import org.shop.service.CashDeskService;
 import org.shop.service.StoreService;
@@ -44,5 +41,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void addReceipt(Store store, Receipt receipt) {
         store.getReceipts().add(receipt);
+    }
+
+    @Override
+    public void addCashier(Store store, Cashier cashier) {
+        store.getCashiers().add(cashier);
     }
 }

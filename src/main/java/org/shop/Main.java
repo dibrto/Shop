@@ -21,6 +21,7 @@ public class Main {
 
         Cashier cashier1 = new Cashier("Ivan", BigDecimal.valueOf(1000));
         CashDesk cashDesk1 = new CashDesk(cashier1);
+        storeService.addCashier(store, cashier1);
 
         Good g1 = new Good("Milk", BigDecimal.valueOf(2.55), GoodCategories.FOOD, LocalDate.parse("2026-06-30"), 10);
         Good g2 = new Good("Bread", BigDecimal.valueOf(1.78), GoodCategories.FOOD, LocalDate.parse("2026-06-18"), 35);
