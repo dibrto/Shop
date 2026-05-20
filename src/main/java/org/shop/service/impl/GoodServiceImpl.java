@@ -33,7 +33,6 @@ public class GoodServiceImpl implements GoodService {
         BigDecimal salePrice = good.getDeliveryPrice().multiply(good.getCategory().getMarkupRate());
 
         if (isInThresholdDays(good)) {
-            System.out.println(good.getCategory().getExpiryDiscountRate());
             salePrice = salePrice.multiply(good.getCategory().getExpiryDiscountRate());
         }
 
