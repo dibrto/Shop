@@ -8,6 +8,7 @@ import org.shop.service.impl.GoodServiceImpl;
 import org.shop.service.impl.StoreServiceImpl;
 import org.shop.utility.Serializer;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -49,14 +50,18 @@ public class Main {
 
             Receipt receipt = new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum);
 
+            File directory = new File("receipts");
+            if (!directory.exists() && !directory.mkdir()) {
+                throw new IOException("Failed to create directory");
+            }
             String filename = "Receipt_" + receipt.getReceiptNo() + ".ser";
-            Serializer.serialize(filename, receipt);
+            Serializer.serialize("receipts/" + filename, receipt);
 
             storeService.addReceipt(store, receipt);
             storeService.soldGoods(store, cashDesk1.getCurrCart());
             cashDeskService.emptyCart(cashDesk1);
 
-            System.out.println(Serializer.deserialize("Receipt_0000000001.ser", Receipt.class));
+            System.out.println(Serializer.deserialize("receipt/Receipt_0000000001.ser", Receipt.class));
 //            System.out.println(store);
         } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException | IOException | ClassNotFoundException e){
             System.out.println(e.getMessage());
