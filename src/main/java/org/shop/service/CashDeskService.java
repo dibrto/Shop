@@ -4,7 +4,11 @@ import org.shop.data.CashDesk;
 import org.shop.data.Good;
 import org.shop.exception.InsufficientQuantityException;
 
+import java.math.BigDecimal;
+
 public interface CashDeskService {
     void addToCart(CashDesk cashDesk, Good good, int quantity) throws InsufficientQuantityException;
     void emptyCart(CashDesk cashDesk);
+
+    BigDecimal getCartPrice(CashDesk cashDesk);
 }

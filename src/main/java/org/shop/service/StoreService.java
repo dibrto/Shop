@@ -8,7 +8,6 @@ import org.shop.exception.GoodNotFoundException;
 import java.util.Map;
 
 public interface StoreService {
-    void makeSale(Store store, CashDesk cashDesk);
     void deliveryGood(Store store, Good good);
     void soldGoods(Store store, Map<Good, Integer> cart);
     Good findGoodById(Store store, int id) throws GoodNotFoundException;

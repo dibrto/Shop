@@ -10,18 +10,6 @@ import org.shop.service.StoreService;
 import java.util.Map;
 
 public class StoreServiceImpl implements StoreService {
-    private final CashDeskService cashDeskService;
-
-    public StoreServiceImpl(CashDeskService cashDeskService) {
-        this.cashDeskService = cashDeskService;
-    }
-
-    @Override
-    public void makeSale(Store store, CashDesk cashDesk) {
-        this.soldGoods(store, cashDesk.getCurrCart());
-        cashDeskService.emptyCart(cashDesk);
-    }
-
     @Override
     public void deliveryGood(Store store, Good good) {
         store.getDeliveredGoods().add(good);
@@ -41,6 +29,7 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
+    @Override
     public Good findGoodById(Store store, int id) throws GoodNotFoundException {
         for (Good good : store.getDeliveredGoods()) {
             if (good.getId() == id) {
