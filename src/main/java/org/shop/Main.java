@@ -14,17 +14,21 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         Store store = new Store();
-        StoreServiceImpl storeService = new StoreServiceImpl();
         GoodServiceImpl goodService = new GoodServiceImpl();
+        StoreServiceImpl storeService = new StoreServiceImpl();
         CashDeskServiceImpl cashDeskService = new CashDeskServiceImpl(goodService);
 
 
-        Cashier cashier1 = new Cashier("Ivan", BigDecimal.valueOf(1000));
+        Cashier cashier1 = new Cashier("Ivan", BigDecimal.valueOf(10));
         CashDesk cashDesk1 = new CashDesk(cashier1);
         storeService.addCashier(store, cashier1);
 
-        Good g1 = new Good("Milk", BigDecimal.valueOf(2.55), GoodCategories.FOOD, LocalDate.parse("2026-06-30"), 10);
-        Good g2 = new Good("Bread", BigDecimal.valueOf(1.78), GoodCategories.FOOD, LocalDate.parse("2026-06-18"), 35);
+        Cashier cashier2 = new Cashier("Peter", BigDecimal.valueOf(10));
+        CashDesk cashDesk2 = new CashDesk(cashier2);
+        storeService.addCashier(store, cashier2);
+
+        Good g1 = new Good("Milk", BigDecimal.valueOf(2), GoodCategories.FOOD, LocalDate.parse("2026-06-30"), 10);
+        Good g2 = new Good("Bread", BigDecimal.valueOf(2), GoodCategories.FOOD, LocalDate.parse("2026-06-18"), 100);
         storeService.deliveryGood(store, g1);
         storeService.deliveryGood(store, g2);
 
@@ -34,10 +38,10 @@ public class Main {
             cashDeskService.addToCart(cashDesk1, good, 1);
 
             good = storeService.findGoodById(store, 2);
-            cashDeskService.addToCart(cashDesk1, good, 2);
+            cashDeskService.addToCart(cashDesk1, good, 100);
 
             BigDecimal totalSum = cashDeskService.getCartPrice(cashDesk1);
-            if (totalSum.compareTo(BigDecimal.valueOf(7.94)) > 0) {
+            if (totalSum.compareTo(BigDecimal.valueOf(2000)) > 0) {
                 System.out.println("Not enough money");
             }
 
@@ -51,6 +55,10 @@ public class Main {
         } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException e) {
             System.out.println(e.getMessage());
         }
+
+        System.out.println(storeService.getExpenses(store));
+        System.out.println(storeService.getRevenue(store));
+        System.out.println(storeService.getProfit(store));
 
 //        Scanner sc = new Scanner(System.in);
 
