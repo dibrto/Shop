@@ -27,8 +27,6 @@ public class Main {
         storeService.deliveryGood(store, g1);
         storeService.deliveryGood(store, g2);
 
-        System.out.println(store.getDeliveredGoods());
-
         Good good;
         try {
             good = storeService.findGoodById(store, 1);
@@ -42,12 +40,13 @@ public class Main {
                 System.out.println("Not enough money");
             }
 
-            System.out.println(new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum));
-            System.out.println(new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum));
+            Receipt receipt = new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum);
+
+            storeService.addReceipt(store, receipt);
             storeService.soldGoods(store, cashDesk1.getCurrCart());
             cashDeskService.emptyCart(cashDesk1);
 
-            System.out.println(store.getSoldGoods());
+            System.out.println(store);
         } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException e) {
             System.out.println(e.getMessage());
         }
