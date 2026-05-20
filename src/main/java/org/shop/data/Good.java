@@ -1,10 +1,11 @@
 package org.shop.data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Good {
+public class Good  implements Serializable {
     private static int nextId = 1;
 
     private final int id;

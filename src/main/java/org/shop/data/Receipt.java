@@ -1,11 +1,12 @@
 package org.shop.data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-public class Receipt {
+public class Receipt implements Serializable {
     private static int nextNo = 1;
 
     private final UUID id;

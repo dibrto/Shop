@@ -6,7 +6,9 @@ import org.shop.exception.InsufficientQuantityException;
 import org.shop.service.impl.CashDeskServiceImpl;
 import org.shop.service.impl.GoodServiceImpl;
 import org.shop.service.impl.StoreServiceImpl;
+import org.shop.utility.Serializer;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,12 +49,16 @@ public class Main {
 
             Receipt receipt = new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum);
 
+            String filename = "Receipt_" + receipt.getReceiptNo() + ".ser";
+            Serializer.serialize(filename, receipt);
+
             storeService.addReceipt(store, receipt);
             storeService.soldGoods(store, cashDesk1.getCurrCart());
             cashDeskService.emptyCart(cashDesk1);
 
-            System.out.println(store);
-        } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException e) {
+            System.out.println(Serializer.deserialize("Receipt_0000000001.ser", Receipt.class));
+//            System.out.println(store);
+        } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException | IOException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
 
