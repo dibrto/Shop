@@ -9,6 +9,7 @@ import org.shop.service.impl.StoreServiceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -41,6 +42,8 @@ public class Main {
                 System.out.println("Not enough money");
             }
 
+            System.out.println(new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum));
+            System.out.println(new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum));
             storeService.soldGoods(store, cashDesk1.getCurrCart());
             cashDeskService.emptyCart(cashDesk1);
 
