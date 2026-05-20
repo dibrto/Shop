@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public enum GoodCategories {
-    FOOD(new BigDecimal("30"), 10, new BigDecimal("20")),
+    FOOD(new BigDecimal("30"), 10, new BigDecimal("10")),
     NON_FOOD(new BigDecimal("25"), 5, new BigDecimal("5"));
 
     private BigDecimal markupRate;
