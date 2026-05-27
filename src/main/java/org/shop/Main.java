@@ -21,78 +21,92 @@ public class Main {
         StoreServiceImpl storeService = new StoreServiceImpl();
         CashDeskServiceImpl cashDeskService = new CashDeskServiceImpl(goodService);
 
+        // create receipts directory if it doesn't exist
+        File directory = new File("receipts");
+        if (!directory.exists() && !directory.mkdir()) {
+            try {
+                throw new IOException("Failed to create directory receipts");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
 
-        Cashier cashier1 = new Cashier("Ivan", BigDecimal.valueOf(10));
+        // add data
+        Cashier cashier1 = new Cashier("Ivan", BigDecimal.valueOf(500));
         CashDesk cashDesk1 = new CashDesk(cashier1);
         storeService.addCashier(store, cashier1);
 
-        Cashier cashier2 = new Cashier("Peter", BigDecimal.valueOf(10));
+        Cashier cashier2 = new Cashier("Peter", BigDecimal.valueOf(1000));
         CashDesk cashDesk2 = new CashDesk(cashier2);
         storeService.addCashier(store, cashier2);
 
-        Good g1 = new Good("Milk", BigDecimal.valueOf(2), GoodCategories.FOOD, LocalDate.parse("2026-06-30"), 10);
-        Good g2 = new Good("Bread", BigDecimal.valueOf(2), GoodCategories.FOOD, LocalDate.parse("2026-06-18"), 100);
+        Good g1 = new Good("Milk", BigDecimal.valueOf(1.2), GoodCategories.FOOD, LocalDate.parse("2026-06-30"), 100);
+        Good g2 = new Good("Bread", BigDecimal.valueOf(1.5), GoodCategories.FOOD, LocalDate.parse("2026-06-18"), 10000);
+        Good g3 = new Good("TV Samsung", BigDecimal.valueOf(1500), GoodCategories.NON_FOOD, LocalDate.parse("2026-06-30"), 100);
         storeService.deliveryGood(store, g1);
         storeService.deliveryGood(store, g2);
+        storeService.deliveryGood(store, g3);
 
         Good good;
+        // sale 1
         try {
             good = storeService.findGoodById(store, 1);
-            cashDeskService.addToCart(cashDesk1, good, 1);
+            cashDeskService.addToCart(cashDesk1, good, 2);
 
             good = storeService.findGoodById(store, 2);
-            cashDeskService.addToCart(cashDesk1, good, 100);
+            cashDeskService.addToCart(cashDesk1, good, 2);
 
             BigDecimal totalSum = cashDeskService.getCartPrice(cashDesk1);
-            if (totalSum.compareTo(BigDecimal.valueOf(2000)) > 0) {
+            if (totalSum.compareTo(BigDecimal.valueOf(10)) > 0) {
                 System.out.println("Not enough money");
             }
 
             Receipt receipt = new Receipt(cashier1, new ArrayList<>(cashDesk1.getCurrCart().keySet()), totalSum);
 
-            File directory = new File("receipts");
-            if (!directory.exists() && !directory.mkdir()) {
-                throw new IOException("Failed to create directory");
-            }
             String filename = "Receipt_" + receipt.getReceiptNo() + ".ser";
             Serializer.serialize("receipts/" + filename, receipt);
 
             storeService.addReceipt(store, receipt);
             storeService.soldGoods(store, cashDesk1.getCurrCart());
             cashDeskService.emptyCart(cashDesk1);
-
-            System.out.println(Serializer.deserialize("receipt/Receipt_0000000001.ser", Receipt.class));
-//            System.out.println(store);
-        } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException | IOException | ClassNotFoundException e){
+        } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException | IOException e){
             System.out.println(e.getMessage());
         }
 
-        System.out.println(storeService.getExpenses(store));
-        System.out.println(storeService.getRevenue(store));
-        System.out.println(storeService.getProfit(store));
+        // sale 2
+        try {
+            good = storeService.findGoodById(store, 3);
+            cashDeskService.addToCart(cashDesk2, good, 100);
 
-//        Scanner sc = new Scanner(System.in);
+            BigDecimal totalSum = cashDeskService.getCartPrice(cashDesk2);
+            if (totalSum.compareTo(BigDecimal.valueOf(200000)) > 0) {
+                System.out.println("Not enough money");
+            }
 
-//        try {
-//            System.out.println("Name: ");
-//            String name = sc.nextLine();
-//
-//            System.out.println("Delivery price: ");
-//            BigDecimal price = new BigDecimal(sc.nextLine());
-//
-//            System.out.println("Category (FOOD, NON_FOOD): ");
-//            GoodCategories category = GoodCategories.valueOf(sc.nextLine().toUpperCase());
-//
-//            System.out.println("Date (yyyy-MM-dd): ");
-//            LocalDate date = LocalDate.parse(sc.nextLine());
-//
-//            System.out.println("Quantity: ");
-//            int quantity = Integer.parseInt(sc.nextLine());
-//
-//            Good good = new Good(name, price, category, date, quantity);
-//            System.out.println(goodService.getSalePrice(good));
-//        } catch (IllegalArgumentException | IllegalStateException e) {
-//            System.out.println(e.getMessage());
-//        }
+            Receipt receipt = new Receipt(cashier2, new ArrayList<>(cashDesk2.getCurrCart().keySet()), totalSum);
+
+            String filename = "Receipt_" + receipt.getReceiptNo() + ".ser";
+            Serializer.serialize("receipts/" + filename, receipt);
+
+            storeService.addReceipt(store, receipt);
+            storeService.soldGoods(store, cashDesk2.getCurrCart());
+            cashDeskService.emptyCart(cashDesk2);
+        } catch (GoodNotFoundException | InsufficientQuantityException | IllegalStateException | IOException e){
+            System.out.println(e.getMessage());
+        }
+
+        // deserialize receipt
+        try {
+            System.out.println("Receipt_0000000001.ser");
+            System.out.println(Serializer.deserialize("receipts/Receipt_0000000001.ser", Receipt.class));
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println();
+        System.out.println("Store financies");
+        System.out.println("Expenses: " + storeService.getExpenses(store));
+        System.out.println("Revenue: " + storeService.getRevenue(store));
+        System.out.println("Profit: " + storeService.getProfit(store));
     }
 }
